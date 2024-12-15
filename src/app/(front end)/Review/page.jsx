@@ -21,18 +21,13 @@ import DoneIcon from '@mui/icons-material/Done';
 import StarIcon from '@mui/icons-material/Star';
 import ShareIcon from '@mui/icons-material/Share';
 import ThemeToggle from '../../components/ThemeToggle'
+
 // Review Section Component
 const ReviewSection = memo(({ reviewer, date, reviewText, initialRating }) => {
   const [rating, setRating] = useState(initialRating);
 
-
-
   return (
-    <section className="mt-[1.5vw] bg-white text-black dark:bg-black dark:text-white flex flex-col ">
-   
-
- 
-    
+    <section className="mt-[1.5vw] bg-white text-black dark:bg-black dark:text-white flex flex-col">
       <div className="flex justify-between">
         <h1 className="text-[1.15vw] leading-[1.7vw] font-semibold">{reviewer}</h1>
         <h2 className="text-[1.15vw] leading-[1.7vw] font-semibold">{date}</h2>
@@ -50,6 +45,8 @@ const ReviewSection = memo(({ reviewer, date, reviewText, initialRating }) => {
   );
 });
 
+// Set displayName for memoized component
+ReviewSection.displayName = 'ReviewSection';
 
 // Overview Item Component
 const OverviewItem = ({ icon: Icon, text }) => (
@@ -58,10 +55,6 @@ const OverviewItem = ({ icon: Icon, text }) => (
     <span>{text}</span>
   </div>
 );
-
-
-
-
 
 // Sidebar Component
 const Sidebar = () => (
@@ -118,8 +111,6 @@ const Sidebar = () => (
       </div>
     </div>
   </aside>
-
-
 );
 
 // Main Review Page Component
@@ -217,8 +208,6 @@ const ReviewPage = () => {
       <Navbar />
       <hr className="border-gray-300 my-[1vw]" />
 
-
-
       <main className="flex gap-[3.5vw] justify-center">
         <Sidebar className=" sticky top-[2vw] left-0 " />
 
@@ -244,7 +233,6 @@ const ReviewPage = () => {
                   >
                     {item}
                   </Link>
-
                 </li>
               ))}
             </ul>
@@ -299,99 +287,38 @@ const ReviewPage = () => {
                         <li>6:00 am-8:00 pm</li>
                       </ul>
                     </div>
-                    <div className="flex items-end justify-end pr-[1.5vw] pt-[0.5vw]">
-                      <a href="#" className="text-purple-500 hover:underline">Read more</a>
-                    </div>
                   </div>
-
-                  <button
-                    className="flex items-center justify-center gap-[0.5vw] mt-[1vw] w-[21vw] h-[4vw] 
-                   border-[0.11vw] border-gray-300 rounded-[0.5vw]"
-                  >
-                    <MessageIcon className="text-purple-600" />
-                    Request a message
-                  </button>
                 </div>
               </div>
             </div>
 
-
-            {/* Photos Section */}
-            <div id="photos" className="mt-[2vw]">
-              <h2 className="text-[1.5vw] leading-[2vw] font-semibold">Photos (5)</h2>
-              <div className="flex gap-[1.5vw] mt-[1vw]">
-                {/* Array of image sources */}
-                {['/g1.png', '/g2.png', '/g3.png', '/g4.png', '/g2.png'].map((src, i) => (
-                  <img key={i} src={src} alt={`Photo ${i + 1}`} className="w-[10vw] object-cover" />
+            {/* Ratings */}
+            <div id="ratings" className="mt-[2vw]">
+              <h2 className="text-[1.5vw] leading-[2vw] font-semibold">Ratings</h2>
+              <div className="flex items-center justify-center mt-[2vw] gap-[2vw]">
+                {rating.map((rate) => (
+                  <div key={rate.star} className="flex flex-col items-center">
+                    <h1 className="font-semibold">{rate.star} Star</h1>
+                    <div className="w-[10vw] bg-slate-300 rounded-lg">
+                      <div
+                        className="bg-purple-400 rounded-lg h-[0.5vw]"
+                        style={{ width: `${rate.percentage}%` }}
+                      ></div>
+                    </div>
+                    <p className="text-[1vw]">{rate.percentage}%</p>
+                  </div>
                 ))}
               </div>
             </div>
 
-
-
-            {/* specifications */}
-            <div id="service" className="mt-[3vw]">
-              <h1 className="text-[1.5vw] font-medium pb-[1vw]">
-                Specialties
-              </h1>
-              {services.map((item, index) => (
-                <div key={index} id={`service-${index}`} className="">  {/* Unique ID for each service */}
-                  <h2 className="text-[1.2vw] font-medium">{item.service}</h2>
-                  <p><DoneIcon sx={{ color: 'green', marginRight: '0.1vw' }} /> {item.about}</p>
-                </div>
+            {/* Reviews Section */}
+            <div id="review" className="mt-[4vw]">
+              <h2 className="text-[1.5vw] leading-[2vw] font-semibold">Reviews</h2>
+              {reviews.map((review, index) => (
+                <ReviewSection key={index} {...review} />
               ))}
             </div>
 
-
-
-
-
-
-
-            {/* Reviews Section */}
-            <div id="review" className="mt-[2vw]">
-              <Typography variant="h5" fontWeight="bold">Review</Typography>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odit, dolorum!</p>
-              <div className="flex items-center justify-between">
-                <div className="items-center">
-                  <Typography className=" text-[1.5vw] font-semibold " variant="subtitle1">4/5</Typography>
-                  <Rating className="-z-10" value={4} readOnly />
-                  <Typography className=" font-semibold text-[1vw]" variant="body2">200 customer reviews</Typography>
-                </div>
-                <div className="w-[0.2vw] h-[14vw] bg-slate-400"></div>
-                <div className="">
-                  {rating.map((item) => (
-                    <div key={item.id} className="flex items-center justify-between w-full my-[1vw]">
-
-                      {/* Star rating */}
-                      <h2 className="text-[1.2vw] font-medium " >{item.star}</h2>
-                      <StarIcon />
-
-                      {/* Progress bar */}
-                      <div className=" ml-[1vw] w-[20vw] bg-gray-200 rounded-full h-2.5 dark:bg-gray-700 mr-[1vw]">
-                        <div
-                          className="bg-purple-500 h-[0.625vw] rounded-full"
-                          style={{ width: `${item.percentage}%` }}
-                        ></div>
-                      </div>
-
-                      {/* Percentage display */}
-                      <div className="flex items-center">
-                        <span className="text-[1vw]">{item.percentage}</span>
-                        <span className="ml-[0.2vw]">%</span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-              </div>
-
-              <div className="mt-[1vw]">
-                {loading ? <p>Loading reviews...</p> : reviews.map((review, i) => (
-                  <ReviewSection key={i} {...review} />
-                ))}
-              </div>
-            </div>
           </div>
         </section>
       </main>
