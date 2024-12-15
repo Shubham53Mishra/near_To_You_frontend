@@ -5,6 +5,7 @@ import HelpIcon from '@mui/icons-material/Help';
 import ThemeToggle from '../../components/ThemeToggle';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
+import Image from 'next/image'; // Import the Image component
 
 const Page = () => {
     const [email, setEmail] = useState(""); // State to hold the email input
@@ -18,8 +19,6 @@ const Page = () => {
         setNotification({ message: "", type: "" });
 
         try {
-            console.log("Sending request to forgot-password API...");
-
             const response = await fetch('https://near-to-you-backend.onrender.com/api/v1/users/forgot-password', {
                 method: 'POST',
                 headers: {
@@ -28,9 +27,7 @@ const Page = () => {
                 body: JSON.stringify({ email }),
             });
 
-            console.log("Response status:", response.status);
             const result = await response.json();
-            console.log("Response body:", result);
 
             if (response.ok) {
                 setNotification({ message: "Password reset link sent to your email.", type: "success" });
@@ -38,7 +35,6 @@ const Page = () => {
                 setNotification({ message: result.message || "Failed to send reset link. Please try again.", type: "error" });
             }
         } catch (error) {
-            console.error("Error in forgot-password request:", error);
             setNotification({ message: "Network error. Please try again later.", type: "error" });
         } finally {
             setShowNotification(true);
@@ -57,23 +53,22 @@ const Page = () => {
             </div>
 
             <Snackbar
-    open={showNotification}
-    autoHideDuration={3000}
-    onClose={handleCloseNotification}
-    anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-    sx={{
-        transform: 'translateX(-30px)', // Move 20px to the left
-    }}
->
-    <Alert
-        onClose={handleCloseNotification}
-        severity={notification.type === "success" ? "success" : "error"}
-        sx={{ width: '100%' }}
-    >
-        {notification.message}
-    </Alert>
-</Snackbar>
-
+                open={showNotification}
+                autoHideDuration={3000}
+                onClose={handleCloseNotification}
+                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                sx={{
+                    transform: 'translateX(-30px)',
+                }}
+            >
+                <Alert
+                    onClose={handleCloseNotification}
+                    severity={notification.type === "success" ? "success" : "error"}
+                    sx={{ width: '100%' }}
+                >
+                    {notification.message}
+                </Alert>
+            </Snackbar>
 
             <div className="flex">
                 {/* Left Section */}
@@ -140,10 +135,12 @@ const Page = () => {
 
                 {/* Right Section */}
                 <div className="h-screen w-[50vw] bg-[#DFD3F2] flex justify-center items-start">
-                    <img
+                    <Image
                         src="/forgot.png"
                         alt="Forgot Password Illustration"
-                        className="mt-[2vw]" // Add margin to position content closer to the top
+                        width={500} // Specify width
+                        height={500} // Specify height
+                        className="mt-[2vw]"
                     />
                 </div>
             </div>

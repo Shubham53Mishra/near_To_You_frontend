@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image'; // Import the Image component from Next.js
 import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
 import SearchIcon from '@mui/icons-material/Search';
 import AssistantIcon from '@mui/icons-material/Assistant';
@@ -61,9 +62,11 @@ const Page = () => {
                         </button>
                     </div>
 
-                    <img
+                    <Image
                         src="/girl.png"
-                        alt="Description of image"
+                        alt="Photography and Videography Service"
+                        width={500}
+                        height={500}
                         className="h-[500px] w-[500px]"
                     />
                     <h1 className="text-center text-[24px] pt-[2vw] pb-[2vw] font-bold font-sans" style={{ color: 'var(--color-primary)' }}>
@@ -118,7 +121,7 @@ const Page = () => {
                             {Array(4)
                                 .fill()
                                 .map((_, index) => (
-                                    <img key={index} src="/g1.png" alt="" className="h-[206px] w-[196px]" />
+                                    <Image key={index} src="/g1.png" alt={`Gallery image ${index + 1}`} width={196} height={206} className="h-[206px] w-[196px]" />
                                 ))}
                         </div>
                     </div>

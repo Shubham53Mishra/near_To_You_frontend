@@ -122,4 +122,7 @@ const Page = () => {
   );
 };
 
+// Fix: Adding a displayName property
+Page.displayName = "Page";
+
 export default Page;

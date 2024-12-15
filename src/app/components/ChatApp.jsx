@@ -4,6 +4,7 @@ import Cookies from "js-cookie";
 import { format, isToday, isYesterday } from "date-fns";
 import { HomeIcon } from "@heroicons/react/24/outline";
 import ThemeToggle from './ThemeToggle'; // Import ThemeToggle
+import Image from 'next/image'; // Import Image component
 
 const Sidebar = ({ users, onSelectUser, selectedUserId }) => {
   return (
@@ -29,10 +30,12 @@ const Sidebar = ({ users, onSelectUser, selectedUserId }) => {
             className={`flex items-center p-3 mb-2 bg-white rounded-lg cursor-pointer hover:bg-gray-100 dark:bg-black dark:text-white dark:hover:bg-gray-800 ${user.id === selectedUserId ? "bg-blue-50 dark:bg-blue-900" : ""}`}
             onClick={() => onSelectUser(user.id)}
           >
-            <img
+            <Image
               src={user.avatar || "https://via.placeholder.com/40"}
               alt={user.name}
-              className="w-10 h-10 rounded-full mr-3"
+              width={40}
+              height={40}
+              className="rounded-full mr-3"
             />
             <div className="flex-1">
               <p className="font-medium">{user.name}</p>
@@ -79,10 +82,12 @@ const ChatMessages = ({ messages, senderId, users }) => {
                 }`}
             >
               {msg.sender !== senderId && (
-                <img
+                <Image
                   src={users.find((u) => u.id === msg.sender)?.avatar || "https://via.placeholder.com/40"}
                   alt="Avatar"
-                  className="w-8 h-8 rounded-full mr-3"
+                  width={32}
+                  height={32}
+                  className="rounded-full mr-3"
                 />
               )}
               <div
@@ -273,10 +278,12 @@ const ChatApp = () => {
         <div className="flex flex-col flex-1 overflow-hidden">
           <div className="flex items-center justify-between p-4 bg-white dark:bg-black border-b border-gray-300">
             <div className="flex items-center">
-              <img
+              <Image
                 src={users.find((u) => u.id === receiverId)?.avatar || "https://via.placeholder.com/40"}
                 alt="Avatar"
-                className="w-10 h-10 rounded-full mr-3"
+                width={40}
+                height={40}
+                className="rounded-full mr-3"
               />
               <p className="font-medium text-lg">
                 {users.find((u) => u.id === receiverId)?.name || "Select a user"}

@@ -1,8 +1,8 @@
-"use client";
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Cookies from 'js-cookie';
 import { AccountCircleRounded as AccountIcon, Search as SearchIcon, Menu as MenuIcon, Close as CloseIcon } from '@mui/icons-material';
+import Image from 'next/image'; // Import Image component
 
 const NavLink = ({ item }) => (
   <li>
@@ -15,7 +15,8 @@ const NavLink = ({ item }) => (
 const UserDropdown = ({ isOpen, toggleDropdown, handleLogout, user }) => (
   <div className="relative">
     <button onClick={toggleDropdown} className="focus:outline-none" aria-label="User Menu">
-      <img src="/robo.png" alt="Account Icon" className="rounded-full w-12 h-12" />
+      {/* Use Image component instead of img */}
+      <Image src="/robo.png" alt="Account Icon" width={48} height={48} className="rounded-full" />
     </button>
     {isOpen && (
       <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg z-50">
@@ -191,3 +192,4 @@ const Navbar = ({ showSearchInput }) => {
 };
 
 export default Navbar;
+
